@@ -29,15 +29,6 @@ public class TINY_Scanner {
         
         String regex = "((?<=[\\*\\+-/=<();:={}\n \t ])|(?=[\\*\\+-/=<();:={}\n\t ]))";
         String[] parts = str.split(regex);
-        
-        /*for (int i = 0; i < parts.length; i++) {
-            if(parts[i].trim().endsWith(";")) {
-                parts[i] = parts[i].replaceAll(";", "");
-                //System.out.println(parts[i]);
-            }
-            insert(parts, i+1, ";");
-            System.out.println(parts[i]);
-        }*/
 
         for (int i = 0; i < parts.length; i++) {
             if(ReservedWord.contains(parts[i])) {
@@ -49,7 +40,8 @@ public class TINY_Scanner {
                 printTokenClass("Symbol");
             }
             else if(isBlank(parts[i])) {
-                //System.out.println(parts[i] + "     White Space");
+                continue;
+                //System.out.print(parts[i]);
                 //printTokenClass("White Space");
             }
             else if(parts[i].charAt(0) == '{'){
@@ -114,19 +106,4 @@ public class TINY_Scanner {
             reader.close();
         }
     }
-    
-    /*public static void insert(String[] array, int i, String s) {
-        String[] newArr = new String[array.length + 1];
-        for (int j = 0; j < array.length; j++) { 
-            if(j < i){
-               newArr[j] = array[j];
-            } else if(j == i){ // '==' insted of '='
-               newArr[j] = s;
-            } else {
-               newArr[j+1] = array[i];
-            }
-        }
-        array = newArr;
-    }*/
-    
 }
