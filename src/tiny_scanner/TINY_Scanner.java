@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author GHAMRY and ZUKI
+ * @author GHAMRY and MOSTAFA
  */
 public class TINY_Scanner {
 
@@ -40,21 +40,53 @@ public class TINY_Scanner {
         
         for (int i = 0; i < parts.length; i++) {
             if(ReservedWord.contains(parts[i])) {
-                System.out.println(parts[i] + "     Reserved Word");
+                System.out.print(parts[i]);
+                printTokenClass("Reserved word");
             }
             else if(Symbol.contains(parts[i])) {
-                System.out.println(parts[i] + "     Symbol");
-            }
-            else if(isNum(parts[i])) {
-                System.out.println(parts[i] + "     Number");
+                System.out.print(parts[i]);
+                printTokenClass("Symbol");
             }
             else if(isBlank(parts[i])) {
-                System.out.println(parts[i] + "     White Space");
+                //System.out.println(parts[i] + "     White Space");
+            }
+            else if(parts[i].charAt(0) == '{'){
+                do{
+                    System.out.print(parts[i] + " ");
+                    i++;
+                }while(parts[i].charAt(parts[i].length()-1) != '}');
+                System.out.print(parts[i]);
+                printTokenClass("Comment");
+            }
+            else if(parts[i].charAt(parts[i].length()-1) == ';'){
+                if(isNum(parts[i])) {
+                    System.out.print(parts[i].substring(0,parts[i].length()-1));
+                    printTokenClass("Number");
+                    System.out.print(";");
+                    printTokenClass("Symbol");
+                }
+                else {
+                    System.out.print(parts[i].substring(0,parts[i].length()-1));
+                    printTokenClass("Identifier");
+                    System.out.print(";");
+                    printTokenClass("Number");
+                }
+            }
+            else if(isNum(parts[i])) {
+                System.out.print(parts[i]);
+                printTokenClass("Number");
             }
             else {
-                System.out.println(parts[i] + "     Identifier");
+                System.out.print(parts[i]);
+                printTokenClass("Identifier");
             }
         }
+        
+    }
+    
+    public static void printTokenClass(String tokenClass){
+        System.out.println("        "+tokenClass);
+        //System.out.println(String.format("%1$30s", tokenClass));
         
     }
     
