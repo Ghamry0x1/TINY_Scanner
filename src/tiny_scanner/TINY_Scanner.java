@@ -20,8 +20,7 @@ public class TINY_Scanner {
 //            str = readFile("D:\\ASU CHEP\\Spring 18\\Design of Compilers\\Project\\Project 1\\Project Description\\Input.txt");
 //        } catch(Exception e) {
 //            System.out.println("Cannot read from text file");
-//        }
-        
+//        }    
         String str = "read x;\n" +
             "if 0 < x then {this is a comment}\n" +
             "fact := 1;\n" +
@@ -31,7 +30,6 @@ public class TINY_Scanner {
             "until x = 0;\n" +
             "write fact\n" +
             "end";
-        
         
         List<String> ReservedWord = new ArrayList<String>();
         List<String> Symbol = new ArrayList<String>();
@@ -114,6 +112,7 @@ public class TINY_Scanner {
         StringBuilder  stringBuilder = new StringBuilder();
         String         ls = System.getProperty("line.separator");
 
+        
         try {
             while((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
