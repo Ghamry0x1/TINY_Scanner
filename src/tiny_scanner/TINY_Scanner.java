@@ -1,10 +1,11 @@
 package tiny_scanner;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -13,11 +14,13 @@ import java.util.regex.Pattern;
 public class TINY_Scanner {
 
     public static void main(String[] args) {
-        try {
-            //FileReader test = new FileReader(TINY_Scanner.class.getResource("input.txt"));
-        } catch(Exception e) {
-            
-        }
+//        String str = "";
+//        try {
+//            //FileReader test = new FileReader(TINY_Scanner.class.getResource("input.txt"));
+//            str = readFile("D:\\ASU CHEP\\Spring 18\\Design of Compilers\\Project\\Project 1\\Project Description\\Input.txt");
+//        } catch(Exception e) {
+//            System.out.println("Cannot read from text file");
+//        }
         
         String str = "read x;\n" +
             "if 0 < x then {this is a comment}\n" +
@@ -29,6 +32,7 @@ public class TINY_Scanner {
             "write fact\n" +
             "end";
         
+        
         List<String> ReservedWord = new ArrayList<String>();
         List<String> Symbol = new ArrayList<String>();
         
@@ -37,7 +41,7 @@ public class TINY_Scanner {
         
         //String regex = "((?<=[\\*\\+-/=<();:={}\n \t ])|(?=[\\*\\+-/=<();:={}\n\t ]))";
         String[] parts = str.split(" |\n|\t");
-        
+
         for (int i = 0; i < parts.length; i++) {
             if(ReservedWord.contains(parts[i])) {
                 System.out.print(parts[i]);
@@ -62,14 +66,16 @@ public class TINY_Scanner {
                 if(isNum(parts[i])) {
                     System.out.print(parts[i].substring(0,parts[i].length()-1));
                     printTokenClass("Number");
+                    
                     System.out.print(";");
                     printTokenClass("Symbol");
                 }
                 else {
                     System.out.print(parts[i].substring(0,parts[i].length()-1));
                     printTokenClass("Identifier");
+                    
                     System.out.print(";");
-                    printTokenClass("Number");
+                    printTokenClass("Symbol");
                 }
             }
             else if(isNum(parts[i])) {
@@ -100,6 +106,24 @@ public class TINY_Scanner {
             ret = value.matches("^[0-9]+$");
         }
         return ret;
+    }
+    
+    private static String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader (file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        try {
+            while((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
     }
     
 }
