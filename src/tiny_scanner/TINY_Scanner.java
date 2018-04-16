@@ -16,20 +16,10 @@ public class TINY_Scanner {
     public static void main(String[] args) {
         String str = "";
         try {
-            //FileReader test = new FileReader(TINY_Scanner.class.getResource("input.txt"));
             str = readFile("Input.txt");
         } catch(Exception e) {
             System.out.println("Cannot read from text file");
-        }    
-        /*String str = "read x;\n" +
-            "if 0 < x then {this is a comment}\n" +
-            "fact := 1;\n" +
-            "repeat \n" +
-            "fact := fact * x;\n" +
-            "x := x - 1\n" +
-            "until x = 0;\n" +
-            "write fact\n" +
-            "end";*/
+        }
         
         List<String> ReservedWord = new ArrayList<String>();
         List<String> Symbol = new ArrayList<String>();
@@ -37,8 +27,17 @@ public class TINY_Scanner {
         ReservedWord.addAll(Arrays.asList("if", "then", "else", "end", "repeat", "until", "read", "write"));
         Symbol.addAll(Arrays.asList("+", "-", "*", "/", "=", "<", "(", ")", ";", ":="));
         
-        //String regex = "((?<=[\\*\\+-/=<();:={}\n \t ])|(?=[\\*\\+-/=<();:={}\n\t ]))";
-        String[] parts = str.split(" |\n|\t");
+        String regex = "((?<=[\\*\\+-/=<();:={}\n \t ])|(?=[\\*\\+-/=<();:={}\n\t ]))";
+        String[] parts = str.split(regex);
+        
+        /*for (int i = 0; i < parts.length; i++) {
+            if(parts[i].trim().endsWith(";")) {
+                parts[i] = parts[i].replaceAll(";", "");
+                //System.out.println(parts[i]);
+            }
+            insert(parts, i+1, ";");
+            System.out.println(parts[i]);
+        }*/
 
         for (int i = 0; i < parts.length; i++) {
             if(ReservedWord.contains(parts[i])) {
@@ -51,28 +50,24 @@ public class TINY_Scanner {
             }
             else if(isBlank(parts[i])) {
                 //System.out.println(parts[i] + "     White Space");
+                //printTokenClass("White Space");
             }
             else if(parts[i].charAt(0) == '{'){
                 do{
                     System.out.print(parts[i] + " ");
                     i++;
-                }while(parts[i].charAt(parts[i].length()-1) != '}');
+                } while(parts[i].charAt(parts[i].length()-1) != '}');
                 System.out.print(parts[i]);
                 printTokenClass("Comment");
             }
-            else if(parts[i].charAt(parts[i].length()-1) == ';'){
-                if(isNum(parts[i])) {
-                    System.out.print(parts[i].substring(0,parts[i].length()-1));
-                    printTokenClass("Number");
-                    
-                    System.out.print(";");
+            else if(parts[i].contains(":")) {
+                if (parts[i+1].contains("=")) {
+                    System.out.print(parts[i] + parts[i+1]);
                     printTokenClass("Symbol");
+                    i++;
                 }
                 else {
-                    System.out.print(parts[i].substring(0,parts[i].length()-1));
-                    printTokenClass("Identifier");
-                    
-                    System.out.print(";");
+                    System.out.print(parts[i]);
                     printTokenClass("Symbol");
                 }
             }
@@ -85,13 +80,10 @@ public class TINY_Scanner {
                 printTokenClass("Identifier");
             }
         }
-        
     }
     
     public static void printTokenClass(String tokenClass){
-        System.out.println("        " + tokenClass);
-        //System.out.println(String.format("%1$30s", tokenClass));
-        
+        System.out.println(String.format("%1$30s", tokenClass));
     }
     
     public static boolean isBlank(String value) {
@@ -122,5 +114,19 @@ public class TINY_Scanner {
             reader.close();
         }
     }
+    
+    /*public static void insert(String[] array, int i, String s) {
+        String[] newArr = new String[array.length + 1];
+        for (int j = 0; j < array.length; j++) { 
+            if(j < i){
+               newArr[j] = array[j];
+            } else if(j == i){ // '==' insted of '='
+               newArr[j] = s;
+            } else {
+               newArr[j+1] = array[i];
+            }
+        }
+        array = newArr;
+    }*/
     
 }
