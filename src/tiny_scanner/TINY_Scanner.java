@@ -14,14 +14,14 @@ import java.util.List;
 public class TINY_Scanner {
 
     public static void main(String[] args) {
-//        String str = "";
-//        try {
-//            //FileReader test = new FileReader(TINY_Scanner.class.getResource("input.txt"));
-//            str = readFile("D:\\ASU CHEP\\Spring 18\\Design of Compilers\\Project\\Project 1\\Project Description\\Input.txt");
-//        } catch(Exception e) {
-//            System.out.println("Cannot read from text file");
-//        }    
-        String str = "read x;\n" +
+        String str = "";
+        try {
+            //FileReader test = new FileReader(TINY_Scanner.class.getResource("input.txt"));
+            str = readFile("Input.txt");
+        } catch(Exception e) {
+            System.out.println("Cannot read from text file");
+        }    
+        /*String str = "read x;\n" +
             "if 0 < x then {this is a comment}\n" +
             "fact := 1;\n" +
             "repeat \n" +
@@ -29,7 +29,7 @@ public class TINY_Scanner {
             "x := x - 1\n" +
             "until x = 0;\n" +
             "write fact\n" +
-            "end";
+            "end";*/
         
         List<String> ReservedWord = new ArrayList<String>();
         List<String> Symbol = new ArrayList<String>();
@@ -89,7 +89,7 @@ public class TINY_Scanner {
     }
     
     public static void printTokenClass(String tokenClass){
-        System.out.println("        "+tokenClass);
+        System.out.println("        " + tokenClass);
         //System.out.println(String.format("%1$30s", tokenClass));
         
     }
@@ -108,17 +108,15 @@ public class TINY_Scanner {
     
     private static String readFile(String file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader (file));
-        String         line = null;
-        StringBuilder  stringBuilder = new StringBuilder();
-        String         ls = System.getProperty("line.separator");
-
+        String line = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
         
         try {
             while((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
                 stringBuilder.append(ls);
             }
-
             return stringBuilder.toString();
         } finally {
             reader.close();
