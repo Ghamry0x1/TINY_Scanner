@@ -36,7 +36,7 @@ public class TINY_Scanner {
         Symbol.addAll(Arrays.asList("+", "-", "*", "/", "=", "<", "(", ")", ";", ":="));
         
         //String regex = "((?<=[\\*\\+-/=<();:={}\n \t ])|(?=[\\*\\+-/=<();:={}\n\t ]))";
-        String[] parts = str.split(" ");
+        String[] parts = str.split(" |\n|\t");
         
         for (int i = 0; i < parts.length; i++) {
             if(ReservedWord.contains(parts[i])) {
@@ -54,8 +54,6 @@ public class TINY_Scanner {
             else {
                 System.out.println(parts[i] + "     Identifier");
             }
-            //comment
-            //x;
         }
         
     }
