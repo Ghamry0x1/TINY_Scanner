@@ -67,9 +67,13 @@ public class TINY_Scanner {
                 System.out.print(parts[i]);
                 printTokenClass("Number");
             }
-            else {
+            else if(isAlph(parts[i])){
                 System.out.print(parts[i]);
                 printTokenClass("Identifier");
+            }
+            else {
+                System.out.print(parts[i]);
+                printTokenClass("Error Identifying The Token");
             }
         }
     }
@@ -89,6 +93,18 @@ public class TINY_Scanner {
         }
         return ret;
     }
+    
+    public static boolean isAlph(String name) {
+    char[] chars = name.toCharArray();
+
+    for (int i = 0 ; i < chars.length ; i++) {
+        if(!Character.isLetter(chars[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
     
     private static String readFile(String file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader (file));
